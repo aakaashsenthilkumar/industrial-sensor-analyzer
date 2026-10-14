@@ -1,14 +1,16 @@
 # Industrial Sensor Analyzer
 
-A Python-based project that generates simulated industrial sensor readings, analyzes sensor data, visualizes trends, and flags potentially abnormal readings.
+A Python-based data analysis pipeline for simulated industrial sensor readings. The project validates sensor data, generates visualizations, identifies potential anomalies, and stores readings in SQLite for SQL-based analysis.
 
 ## Features
 
-- Generates simulated temperature, pressure, and vibration readings.
-- Analyzes datasets using pandas.
-- Plots sensor readings over time using Matplotlib.
-- Flags suspicious readings using rule-based thresholds and statistical pressure limits.
-- Exports detected anomalies to a CSV report.
+- **Data generation:** Creates simulated temperature, pressure, and vibration readings.
+- **Data validation:** Checks required columns, numeric values, timestamps, duplicate readings, chronological order, and configurable plausibility ranges.
+- **Data analysis:** Uses pandas to inspect readings and calculate descriptive statistics.
+- **Visualization:** Generates time-series plots for sensor measurements.
+- **Anomaly detection:** Flags potential anomalies using configurable thresholds and statistical rules.
+- **SQL integration:** Stores sensor readings in SQLite and queries the database for potentially abnormal readings.
+- **Automated tests:** Tests core data assumptions using pytest.
 
 ## Tech Stack
 
@@ -16,36 +18,85 @@ A Python-based project that generates simulated industrial sensor readings, anal
 - pandas
 - NumPy
 - Matplotlib
-- scikit-learn (planned for the machine learning extension)
+- SQLite
+- pytest
+- Git and GitHub
 
 ## Project Structure
 
-- `src/data_generator.py` — generates simulated sensor data.
-- `src/analyze.py` — explores the dataset and calculates summary statistics.
-- `src/plot_sensors.py` — creates sensor trend plots.
-- `src/detect_anomalies.py` — detects and exports suspicious readings.
-- `data/` — stores generated readings, plots, and anomaly reports.
-
-## How to Run
-
-Create and activate a Python virtual environment, then install the required dependencies.
-
-Run these commands from the project root:
-
-```bash
-python src/data_generator.py
-python src/analyze.py
-python src/plot_sensors.py
-python src/detect_anomalies.py
+```text
+industrial-sensor-analyzer/
+├── data/
+│   ├── sensor_readings.csv
+│   ├── sensor_plots.png
+│   ├── detected_anomalies.csv
+│   └── sensor_readings.db
+├── src/
+│   ├── data_generator.py
+│   ├── validate_data.py
+│   ├── analyze.py
+│   ├── plot_sensors.py
+│   ├── detect_anomalies.py
+│   ├── load_database.py
+│   ├── query_database.py
+│   └── run_pipeline.py
+├── tests/
+│   └── test_data.py
+├── .gitignore
+└── README.md
 ```
 
-## Current Limitations
+## Setup
 
-The data is simulated rather than collected from real equipment. Detection rules are experimental and are not validated for real industrial safety or maintenance decisions.
+Requires Python 3.13 or another compatible Python version.
+
+1. Clone the repository and navigate to the project folder.
+2. Create and activate a virtual environment.
+3. Install the required dependencies.
+4. Run the pipeline.
+
+Example commands for Windows PowerShell:
+
+```powershell
+git clone https://github.com/aakaashsenthilkumar/industrial-sensor-analyzer.git
+cd industrial-sensor-analyzer
+
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+python -m pip install pandas numpy matplotlib pytest
+python src/run_pipeline.py
+```
+
+## Run Tests
+
+```powershell
+python -m pytest
+```
+
+## Output
+
+The pipeline generates or updates:
+
+- `data/sensor_readings.csv` — simulated sensor measurements.
+- `data/sensor_plots.png` — time-series plots.
+- `data/detected_anomalies.csv` — readings flagged by the anomaly detector.
+- `data/sensor_readings.db` — SQLite database containing sensor readings.
+
+## Limitations
+
+- Sensor readings are simulated and do not represent a validated real-world equipment dataset.
+- Anomaly detection currently uses rule-based thresholds and statistical checks, not a trained machine-learning model.
+- Plausibility ranges are demonstration settings, not equipment-specific operating limits.
+- A flagged reading is a potential anomaly, not proof of equipment failure.
 
 ## Planned Improvements
 
-- Train and evaluate a machine learning anomaly detection model.
-- Add automated tests.
-- Compare rule-based and machine learning results.
-- Add SQL storage and queries.
+- Train and evaluate a machine-learning anomaly detection model.
+- Compare model-based detection with rule-based detection.
+- Build an AI assistant that explains sensor anomalies using technical documentation.
+- Expose the analysis through an API and deploy the application.
+
+## Disclaimer
+
+This project is for educational and demonstration purposes. It is not intended for safety-critical decisions or direct control of industrial equipment.
