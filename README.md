@@ -1,16 +1,17 @@
 # Industrial Sensor Analyzer
 
-A Python-based data analysis pipeline for simulated industrial sensor readings. The project validates sensor data, generates visualizations, identifies potential anomalies, and stores readings in SQLite for SQL-based analysis.
+A Python-based sensor data analysis pipeline built around simulated industrial equipment readings. The project demonstrates data validation, exploratory data analysis, rule-based anomaly detection, visualization, and SQL-based data storage.
 
 ## Features
 
-- **Data generation:** Creates simulated temperature, pressure, and vibration readings.
-- **Data validation:** Checks required columns, numeric values, timestamps, duplicate readings, chronological order, and configurable plausibility ranges.
-- **Data analysis:** Uses pandas to inspect readings and calculate descriptive statistics.
-- **Visualization:** Generates time-series plots for sensor measurements.
-- **Anomaly detection:** Flags potential anomalies using configurable thresholds and statistical rules.
-- **SQL integration:** Stores sensor readings in SQLite and queries the database for potentially abnormal readings.
-- **Automated tests:** Tests core data assumptions using pytest.
+- **Data generation:** Generate a sample dataset containing temperature, pressure, and vibration readings.
+- **Data validation:** Check required columns, missing or non-numeric readings, invalid or duplicate timestamps, chronological order, and plausible sensor ranges.
+- **Exploratory data analysis:** Summarize sensor readings and identify values that exceed selected thresholds.
+- **Anomaly detection:** Flag suspicious readings using configurable rules and statistical thresholds.
+- **Data visualization:** Generate plots to help inspect sensor behavior.
+- **SQLite integration:** Store readings in a local database and query them using SQL.
+- **Automated testing:** Use pytest to test dataset properties and data validation behavior.
+- **Pipeline automation:** Run the main project steps sequentially with a single command.
 
 ## Tech Stack
 
@@ -20,17 +21,12 @@ A Python-based data analysis pipeline for simulated industrial sensor readings. 
 - Matplotlib
 - SQLite
 - pytest
-- Git and GitHub
 
 ## Project Structure
 
 ```text
 industrial-sensor-analyzer/
-├── data/
-│   ├── sensor_readings.csv
-│   ├── sensor_plots.png
-│   ├── detected_anomalies.csv
-│   └── sensor_readings.db
+├── data/                 # Generated data, plots, and local database
 ├── src/
 │   ├── data_generator.py
 │   ├── validate_data.py
@@ -40,63 +36,59 @@ industrial-sensor-analyzer/
 │   ├── load_database.py
 │   ├── query_database.py
 │   └── run_pipeline.py
-├── tests/
-│   └── test_data.py
-├── .gitignore
-└── README.md
+└── tests/
+    └── test_data.py
 ```
 
-## Setup
+## Getting Started
 
-Requires Python 3.13 or another compatible Python version.
+### 1. Clone the repository
 
-1. Clone the repository and navigate to the project folder.
-2. Create and activate a virtual environment.
-3. Install the required dependencies.
-4. Run the pipeline.
-
-Example commands for Windows PowerShell:
-
-```powershell
+```bash
 git clone https://github.com/aakaashsenthilkumar/industrial-sensor-analyzer.git
 cd industrial-sensor-analyzer
+```
 
+### 2. Create and activate a virtual environment
+
+Windows PowerShell:
+
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
 
+### 3. Install dependencies
+
+```powershell
 python -m pip install pandas numpy matplotlib pytest
+```
+
+### 4. Run the pipeline
+
+```powershell
 python src/run_pipeline.py
 ```
 
-## Run Tests
+The pipeline generates or loads sensor readings, validates the data, performs analysis, creates visualizations, detects anomalies, and loads readings into SQLite for querying.
+
+### 5. Run the tests
 
 ```powershell
-python -m pytest
+python -m pytest -v
 ```
 
-## Output
+The test suite currently contains 11 tests covering dataset properties and data validation, including invalid readings, timestamps, and out-of-range values.
 
-The pipeline generates or updates:
+## Notes
 
-- `data/sensor_readings.csv` — simulated sensor measurements.
-- `data/sensor_plots.png` — time-series plots.
-- `data/detected_anomalies.csv` — readings flagged by the anomaly detector.
-- `data/sensor_readings.db` — SQLite database containing sensor readings.
+- The sensor dataset is simulated and is intended for learning and software development.
+- Validation ranges and anomaly thresholds are configurable examples, not verified operating limits for real industrial equipment.
+- Generated datasets, plots, and local database files are kept out of version control.
 
-## Limitations
+## Future Improvements
 
-- Sensor readings are simulated and do not represent a validated real-world equipment dataset.
-- Anomaly detection currently uses rule-based thresholds and statistical checks, not a trained machine-learning model.
-- Plausibility ranges are demonstration settings, not equipment-specific operating limits.
-- A flagged reading is a potential anomaly, not proof of equipment failure.
-
-## Planned Improvements
-
-- Train and evaluate a machine-learning anomaly detection model.
-- Compare model-based detection with rule-based detection.
-- Build an AI assistant that explains sensor anomalies using technical documentation.
-- Expose the analysis through an API and deploy the application.
-
-## Disclaimer
-
-This project is for educational and demonstration purposes. It is not intended for safety-critical decisions or direct control of industrial equipment.
+- Add machine-learning-based anomaly detection.
+- Evaluate model performance against labeled or synthetic fault conditions.
+- Expose analysis through an API.
+- Integrate an AI assistant to explain suspicious sensor readings.
